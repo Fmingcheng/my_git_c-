@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<int> printMatrix(vector<vector<int> > matrix) {
+        //思路：一圈一圈得走
+        vector<int> v;
+        int row = matrix.size();
+        int col = matrix[0].size();
+        if(row == col && row == 0)
+            return v;
+        int begin = 0;
+        int end = 1;
+        int sum = row*col;
+        while(v.size() < sum){
+            //先向右
+            for(int i = begin;i < col;i++){
+                v.push_back(matrix[begin][i]);
+            }
+            //在向下
+            for(int i = end;i < row;i++){
+                v.push_back(matrix[i][col-1]);
+            }
+            //向左
+            if(end < row){//当end < row就向下走不了了，说明只剩下一行
+                for(int i = col-2;i >= begin;i--){
+                    v.push_back(matrix[row-1][i]);
+                }
+            }
+            //向上
+            if(col != 1){//只剩一行时不能向上走
+                for(int i = row-2;i >= end;i--){
+                    v.push_back(matrix[i][begin]);
+                }
+            }
+            begin++;
+            end++;
+            row--;
+            col--;
+        }
+        return v;
+    }
+};
